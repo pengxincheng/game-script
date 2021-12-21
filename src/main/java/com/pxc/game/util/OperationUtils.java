@@ -1,7 +1,11 @@
 package com.pxc.game.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.pxc.game.model.Location;
 import com.pxc.game.ocr.OcrUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,6 +22,10 @@ import java.io.IOException;
  */
 public class OperationUtils {
 
+    private static final Logger logger = LoggerFactory.getLogger(OperationUtils.class);
+
+    private static final Dimension DIMENSION = Toolkit.getDefaultToolkit().getScreenSize();
+
     /**
      * 截屏，返回图片路径
      *
@@ -30,7 +38,7 @@ public class OperationUtils {
         // 截取屏幕
         BufferedImage image = new Robot().createScreenCapture(new Rectangle(screenSize));
         // 创建一个用于保存图片的文件夹
-        String path = "D:/test/screenCapture/";
+        String path = "image/screenCapture/";
         File screenCaptureDirectory = new File(path);
         if (!screenCaptureDirectory.exists()) {
             screenCaptureDirectory.mkdirs();
@@ -44,6 +52,7 @@ public class OperationUtils {
 
     /**
      * 找文字位置
+     *
      * @param filePath
      * @param keyWord
      * @return
@@ -54,6 +63,7 @@ public class OperationUtils {
 
     /**
      * 找并且点击
+     *
      * @param keyWord
      * @throws IOException
      * @throws AWTException
@@ -61,15 +71,18 @@ public class OperationUtils {
     public static void findAndClick(String keyWord) throws IOException, AWTException {
         String imgPath = screenshot();
         Location location = getWordLocation(imgPath, keyWord);
+   //     logger.info("截图中关键字的位置：location={}", JSON.toJSONString(location));
+
+        logger.info("匹配到需要点击的位置：location={}", JSON.toJSONString(location));
 
         Robot robot = new Robot();
         robot.delay(1000);
 
-        robot.mouseMove(location.getX()+10, location.getY()+10);
+        robot.mouseMove(location.getX() + 10, location.getY() + 10);
         robot.delay(1000);
 
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        robot.delay(1000);
+       // robot.delay(500);
 
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
     }
