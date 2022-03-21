@@ -82,8 +82,10 @@ public class OperationUtils {
         robot.delay(1000);
 
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-       // robot.delay(500);
+        robot.delay(100);
 
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+
+        logger.info("点击成功！");
     }
 }

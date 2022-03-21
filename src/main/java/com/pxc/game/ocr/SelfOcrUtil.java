@@ -5,8 +5,11 @@ import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.pxc.game.util.OperationUtils;
 
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,9 +21,11 @@ public class SelfOcrUtil {
 
     private static final String selfOcrUrl = "http://ocr.xinchengkeji.work/api/tr-run/";
 
-    public static Boolean existKeyWord(File image, String keyWork) {
+    public static Boolean existKeyWord(String keyWork) throws IOException, AWTException {
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("file",image);
+
+        String filePath = OperationUtils.screenshot();
+        paramMap.put("file", new File(filePath));
 
         String result2 = HttpRequest.post(selfOcrUrl)
                 .header(Header.USER_AGENT, "Hutool http")//头信息，多个头信息多次调用此方法即可
