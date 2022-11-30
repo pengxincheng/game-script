@@ -1,5 +1,6 @@
 package com.pxc.game.ocr;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.baidu.aip.ocr.AipOcr;
 import com.pxc.game.model.Location;
 import com.pxc.game.util.OperationUtils;
@@ -14,7 +15,7 @@ import java.util.Map;
 /**
  * @author: pengxincheng
  * @Date: 2019/12/5 12:09
- * @Description:
+ * @Description: 百度ocr识别工具
  */
 public class OcrUtil {
 
@@ -42,7 +43,7 @@ public class OcrUtil {
         HashMap<String, String> paramMap = new HashMap<>(16);
         paramMap.put("vertexes_location", "true");
 
-        JSONObject res = client.general(imgPath, paramMap);
+        JSONObject res = client.accurateGeneral(imgPath, paramMap);
         logger.info("res={}", res);
 
         JSONArray words_result = res.getJSONArray("words_result");
@@ -50,22 +51,35 @@ public class OcrUtil {
         logger.info("ocr返回数据words_result={}", words_result);
 
         Location result = new Location();
+
+
+        JSONObject maxLeftLocation = new JSONObject();
+        Integer maxLeft = 0;
         for (Object w : words_result) {
-            String words = ((JSONObject) w).getString("words");
+            JSONObject wObj =  (JSONObject) w;
+            String words = wObj.getString("words");
             if (words.contains(word)) {
-                // 文字外接多边形的丁点坐标
-                JSONArray locations = ((JSONObject) w).getJSONArray("vertexes_location");
-                int x = 0;
-                int y = 0;
-                for (Object location : locations) {
-                    JSONObject jsonLocation = ((JSONObject) location);
-                    x += jsonLocation.getInt("x");
-                    y += jsonLocation.getInt("y");
+                Integer tmpInt = wObj.getJSONObject("location").getInt("left");
+                if(tmpInt > maxLeft){
+                    maxLeft = tmpInt;
+                    maxLeftLocation = wObj;
                 }
-                result.setX(x / 4);
-                result.setY(y / 4);
-                break;
             }
+        }
+
+
+        int x = 0;
+        int y = 0;
+        // 文字外接多边形的丁点坐标
+        JSONArray locations = maxLeftLocation.getJSONArray("vertexes_location");
+        if (CollectionUtil.isNotEmpty(locations)) {
+            for (Object location : locations) {
+                JSONObject jsonLocation = ((JSONObject) location);
+                x += jsonLocation.getInt("x");
+                y += jsonLocation.getInt("y");
+            }
+            result.setX(x / 4);
+            result.setY(y / 4);
         }
         return result;
     }

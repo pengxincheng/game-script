@@ -35,14 +35,19 @@ public class Script {
                 String imagePath = OperationUtils.screenshot();
                 String words = OcrUtil.getOcrResult(imagePath);
                 //  boolean b = SelfOcrUtil.existKeyWord("是否继续抓鬼");
-                boolean b = words.contains("是否继续抓鬼");
+                boolean b = words.contains("是否继续捉鬼");
+              //  boolean b = true;
                 logger.info("查找结果：{}", b);
                 if (b) {
                     OperationUtils.findAndClick("确定", imagePath);
+
+                    TimeUnit.SECONDS.sleep(7);
+                    String taskImagePath = OperationUtils.screenshot();
+                    OperationUtils.findAndClick("捉鬼任务", taskImagePath);
                     TimeUnit.SECONDS.sleep(3);
-                    OperationUtils.findAndClick("抓鬼任务", imagePath);
-                    TimeUnit.SECONDS.sleep(3);
-                    OperationUtils.findAndClick("捉鬼", imagePath);
+
+                    String zhuaguiImagePath = OperationUtils.screenshot();
+                    OperationUtils.findAndClick("1/10", zhuaguiImagePath);
                     TimeUnit.SECONDS.sleep(3);
 
                     robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);

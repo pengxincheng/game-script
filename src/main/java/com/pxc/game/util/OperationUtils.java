@@ -3,6 +3,8 @@ package com.pxc.game.util;
 import com.alibaba.fastjson.JSON;
 import com.pxc.game.model.Location;
 import com.pxc.game.ocr.OcrUtil;
+import com.pxc.game.ocr.TencentOcrUtil;
+import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,8 +58,10 @@ public class OperationUtils {
      * @param keyWord
      * @return
      */
-    public static Location getWordLocation(String filePath, String keyWord) {
-        return OcrUtil.findCoordinate(filePath, keyWord);
+    public static Location getWordLocation(String filePath, String keyWord) throws TencentCloudSDKException {
+        // 上面一行是百度云文文字识别高精度版 下面是腾讯云文字识别带位置版
+       // return OcrUtil.findCoordinate(filePath, keyWord);
+        return TencentOcrUtil.findCoordinate(filePath,keyWord);
     }
 
     /**
@@ -68,7 +72,7 @@ public class OperationUtils {
      * @throws IOException
      * @throws AWTException
      */
-    public static void findAndClick(String keyWord,String imgPath) throws IOException, AWTException {
+    public static void findAndClick(String keyWord,String imgPath) throws Exception {
         Location location = getWordLocation(imgPath, keyWord);
         logger.info("匹配到需要点击的位置：location={}", JSON.toJSONString(location));
 
@@ -79,7 +83,7 @@ public class OperationUtils {
         robot.delay(1000);
 
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        robot.delay(100);
+        robot.delay(300);
 
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 

@@ -44,6 +44,12 @@
       <artifactId>hutool-all</artifactId>
       <version>5.6.3</version>
     </dependency>
+
+    <dependency>
+      <groupId>com.tencentcloudapi</groupId>
+      <artifactId>tencentcloud-sdk-java-ocr</artifactId>
+      <version>3.1.628</version>
+    </dependency>
   </dependencies>
 
   <build>

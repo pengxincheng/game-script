@@ -18,8 +18,8 @@ public class App {
         // TimeUnit.SECONDS.sleep(5);
 
 
-        // Script.zhuaGui();
-        Script.menPai();
+         Script.zhuaGui();
+        //Script.menPai();
 
     }
 }
