@@ -87,7 +87,7 @@ public class OcrUtil {
 
     /**
      * 获取图片识别结果都有哪些文字
-     *
+     * 普通文字识别，主要判断是否有想要点击的接口
      * @param imgPath
      * @return
      */

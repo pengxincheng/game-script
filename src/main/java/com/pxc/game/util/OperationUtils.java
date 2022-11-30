@@ -59,7 +59,6 @@ public class OperationUtils {
      * @return
      */
     public static Location getWordLocation(String filePath, String keyWord) throws TencentCloudSDKException {
-        // 上面一行是百度云文文字识别高精度版 下面是腾讯云文字识别带位置版
        // return OcrUtil.findCoordinate(filePath, keyWord);
         return TencentOcrUtil.findCoordinate(filePath,keyWord);
     }
