@@ -21,8 +21,8 @@ import java.io.File;
  * @Description
  */
 public class TencentOcrUtil {
-    private static final String SECRET_ID = "AKIDiFbkdHl4CF1cz6vTj4JSQ8aeSzgo5Rqz";
-    private static final String SECRET_KEY = "1nImzxf6G9k4LL5YkgLXiqoY1EBsIRil";
+    private static final String SECRET_ID = "";
+    private static final String SECRET_KEY = "";
     private static final String REGION = "ap-beijing";
 
     /**

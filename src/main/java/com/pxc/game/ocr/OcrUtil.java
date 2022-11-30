@@ -21,9 +21,9 @@ public class OcrUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(OperationUtils.class);
 
-    public static final String APP_ID = "11787520";
-    public static final String API_KEY = "gj4GtsYBfOSvYtLCCGPpIc5y";
-    public static final String SECRET_KEY = "Z2q44GaY1u4ZPj06vMnpSOMjyfosMwpp";
+    public static final String APP_ID = "";
+    public static final String API_KEY = "";
+    public static final String SECRET_KEY = "";
     public static AipOcr client = new AipOcr(APP_ID, API_KEY, SECRET_KEY);
 
 
