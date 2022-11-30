@@ -1,7 +1,7 @@
 package com.pxc.game.ocr;
-
 import cn.hutool.core.collection.CollectionUtil;
 import com.baidu.aip.ocr.AipOcr;
+import com.pxc.game.App;
 import com.pxc.game.model.Location;
 import com.pxc.game.util.OperationUtils;
 import org.json.JSONArray;
@@ -9,8 +9,12 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
+import java.util.ResourceBundle;
 
 /**
  * @author: pengxincheng
@@ -18,14 +22,20 @@ import java.util.Map;
  * @Description: 百度ocr识别工具
  */
 public class OcrUtil {
-
     private static final Logger logger = LoggerFactory.getLogger(OperationUtils.class);
 
-    public static final String APP_ID = "";
-    public static final String API_KEY = "";
-    public static final String SECRET_KEY = "";
-    public static AipOcr client = new AipOcr(APP_ID, API_KEY, SECRET_KEY);
+    public static String APP_ID;
+    public static String API_KEY;
+    public static String SECRET_KEY;
+    public static AipOcr client;
 
+    static {
+        ResourceBundle ocrRes = ResourceBundle.getBundle("ocr");
+        APP_ID = ocrRes.getString("baidu.ocr.app_id");
+        API_KEY = ocrRes.getString("baidu.ocr.api_key");
+        SECRET_KEY = ocrRes.getString("baidu.ocr.secret_key");
+        client = new AipOcr(APP_ID, API_KEY, SECRET_KEY);
+    }
 
     /**
      * 在图片上找文字 片并返回坐标
@@ -56,11 +66,11 @@ public class OcrUtil {
         JSONObject maxLeftLocation = new JSONObject();
         Integer maxLeft = 0;
         for (Object w : words_result) {
-            JSONObject wObj =  (JSONObject) w;
+            JSONObject wObj = (JSONObject) w;
             String words = wObj.getString("words");
             if (words.contains(word)) {
                 Integer tmpInt = wObj.getJSONObject("location").getInt("left");
-                if(tmpInt > maxLeft){
+                if (tmpInt > maxLeft) {
                     maxLeft = tmpInt;
                     maxLeftLocation = wObj;
                 }
@@ -88,6 +98,7 @@ public class OcrUtil {
     /**
      * 获取图片识别结果都有哪些文字
      * 普通文字识别，主要判断是否有想要点击的接口
+     *
      * @param imgPath
      * @return
      */

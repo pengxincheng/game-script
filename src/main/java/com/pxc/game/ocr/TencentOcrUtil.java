@@ -4,6 +4,7 @@ package com.pxc.game.ocr;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.io.FileUtil;
+import com.baidu.aip.ocr.AipOcr;
 import com.pxc.game.model.Location;
 import com.sun.prism.Image;
 import com.tencentcloudapi.common.Credential;
@@ -14,6 +15,7 @@ import com.tencentcloudapi.ocr.v20181119.OcrClient;
 import com.tencentcloudapi.ocr.v20181119.models.*;
 
 import java.io.File;
+import java.util.ResourceBundle;
 
 /**
  * @author pengxincheng
@@ -21,9 +23,16 @@ import java.io.File;
  * @Description
  */
 public class TencentOcrUtil {
-    private static final String SECRET_ID = "";
-    private static final String SECRET_KEY = "";
-    private static final String REGION = "ap-beijing";
+    private static  String SECRET_ID;
+    private static  String SECRET_KEY;
+    private static  String REGION = "ap-beijing";
+
+
+    static {
+        ResourceBundle ocrRes = ResourceBundle.getBundle("ocr");
+        SECRET_ID = ocrRes.getString("tencent.ocr.secret_id");
+        SECRET_KEY = ocrRes.getString("tencent.ocr.secret_key");
+    }
 
     /**
      * 在图片上找文字 片并返回坐标
