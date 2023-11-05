@@ -1,0 +1,56 @@
+package com.pxc.game.script;
+
+import cn.hutool.core.io.FileUtil;
+import com.pxc.game.ocr.OcrUtil;
+import com.pxc.game.util.OperationUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.awt.*;
+import java.awt.event.InputEvent;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * @author pengxincheng
+ * @Date 2022/12/7 20:57
+ * @Description
+ */
+public class HaidiScript {
+    private static final Logger logger = LoggerFactory.getLogger(HaidiScript.class);
+    /**
+     * 门派
+     *
+     * @throws Exception
+     */
+    public static void haidi() throws Exception {
+        Robot robot = new Robot();
+        while (true) {
+            try {
+                logger.info("开始海底任务任务");
+                // boolean b = SelfOcrUtil.existKeyWord("挑战");
+                String imagePath = OperationUtils.screenshot();
+                String words = OcrUtil.getOcrResult(imagePath);
+                boolean b = words.contains("前往挑战");
+                logger.info("查找结果：{}", b);
+                if (b) {
+                    OperationUtils.findAndClick("前往挑战", imagePath);
+
+                    robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+                    robot.delay(100);
+                    robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+
+                    TimeUnit.SECONDS.sleep(10);
+
+                    String imagePath1 = OperationUtils.screenshot();
+                    OperationUtils.findAndClick("挑战", imagePath1);
+
+                }
+                FileUtil.del(imagePath);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            TimeUnit.SECONDS.sleep(15);
+
+        }
+    }
+}

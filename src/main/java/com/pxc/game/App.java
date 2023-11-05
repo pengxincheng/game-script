@@ -1,5 +1,7 @@
 package com.pxc.game;
 
+import com.pxc.game.script.HaidiScript;
+import com.pxc.game.script.MiJingScript;
 import com.pxc.game.script.Script;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,12 +18,15 @@ public class App {
 
 
     public static void main(String[] args) throws Exception {
-        logger.info("5秒后开始运行");
-         TimeUnit.SECONDS.sleep(5);
-
+        logger.info("10秒后开始运行");
+         TimeUnit.SECONDS.sleep(10);
 
          Script.zhuaGui();
-        //Script.menPai();
+       // Script.menPai();
+
+      //  MiJingScript.mijing();
+
+     //   HaidiScript.haidi();
 
     }
 }

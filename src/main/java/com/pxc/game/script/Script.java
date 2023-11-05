@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * @Description:
  */
 public class Script {
-    private static final Logger logger = LoggerFactory.getLogger(App.class);
+    private static final Logger logger = LoggerFactory.getLogger(Script.class);
 
     /**
      * 抓鬼
@@ -35,13 +35,13 @@ public class Script {
                 String imagePath = OperationUtils.screenshot();
                 String words = OcrUtil.getOcrResult(imagePath);
                 //  boolean b = SelfOcrUtil.existKeyWord("是否继续抓鬼");
-                boolean b = words.contains("是否继续捉鬼");
-              //  boolean b = true;
+               boolean b = words.contains("是否继续捉鬼");
+               //  boolean b = true;
                 logger.info("查找结果：{}", b);
                 if (b) {
                     OperationUtils.findAndClick("确定", imagePath);
 
-                    TimeUnit.SECONDS.sleep(7);
+                    TimeUnit.SECONDS.sleep(15);
                     String taskImagePath = OperationUtils.screenshot();
                     OperationUtils.findAndClick("捉鬼任务", taskImagePath);
                     TimeUnit.SECONDS.sleep(3);
@@ -86,14 +86,15 @@ public class Script {
                     robot.delay(100);
                     robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 
-                    TimeUnit.SECONDS.sleep(5);
-                    OperationUtils.findAndClick("进入战斗", imagePath);
+                    TimeUnit.SECONDS.sleep(10);
+                    String imagePath1 = OperationUtils.screenshot();
+                    OperationUtils.findAndClick("进入战斗", imagePath1);
                 }
                 FileUtil.del(imagePath);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            TimeUnit.SECONDS.sleep(30);
+            TimeUnit.SECONDS.sleep(10);
 
         }
     }
