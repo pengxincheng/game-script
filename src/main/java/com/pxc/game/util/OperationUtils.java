@@ -43,7 +43,7 @@ public class OperationUtils {
         // 截取屏幕
         BufferedImage image = new Robot().createScreenCapture(new Rectangle(screenSize));
         // 创建一个用于保存图片的文件夹
-        String path = "image/screenCapture/";
+        String path = "D:/image/screenCapture/";
         File screenCaptureDirectory = new File(path);
         if (!screenCaptureDirectory.exists()) {
             screenCaptureDirectory.mkdirs();
@@ -64,8 +64,18 @@ public class OperationUtils {
      * @return
      */
     public static Location getWordLocation(String filePath, String keyWord) throws TencentCloudSDKException {
-       // return OcrUtil.findCoordinate(filePath, keyWord);
-        return TencentOcrUtil.findCoordinate(filePath,keyWord);
+        return OcrUtil.findCoordinate(filePath, keyWord);
+      //  return TencentOcrUtil.findCoordinate(filePath,keyWord);
+    }
+    /**
+     * 找文字位置 百度
+     *
+     * @param filePath
+     * @param keyWord
+     * @return
+     */
+    public static Location getWordLocationBaidu(String filePath, String keyWord) throws TencentCloudSDKException {
+         return OcrUtil.findCoordinate(filePath, keyWord);
     }
     /**
      * 找文字位置
@@ -89,6 +99,32 @@ public class OperationUtils {
      */
     public static void findAndClick(String keyWord,String imgPath) throws Exception {
         Location location = getWordLocation(imgPath, keyWord);
+        logger.info("匹配到需要点击的位置：location={}", JSON.toJSONString(location));
+
+        Robot robot = new Robot();
+        robot.delay(1000);
+
+        robot.mouseMove(location.getX() + 10, location.getY() + 10);
+        robot.delay(1000);
+
+        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+        robot.delay(300);
+
+        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+
+        logger.info("点击成功！");
+    }
+
+    /**
+     * 找并且点击
+     *
+     * @param keyWord
+     * @param imgPath
+     * @throws IOException
+     * @throws AWTException
+     */
+    public static void findAndClickBaidu(String keyWord,String imgPath) throws Exception {
+        Location location = getWordLocationBaidu(imgPath, keyWord);
         logger.info("匹配到需要点击的位置：location={}", JSON.toJSONString(location));
 
         Robot robot = new Robot();

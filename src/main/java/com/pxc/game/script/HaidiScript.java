@@ -33,7 +33,7 @@ public class HaidiScript {
                 boolean b = words.contains("前往挑战");
                 logger.info("查找结果：{}", b);
                 if (b) {
-                    OperationUtils.findAndClick("前往挑战", imagePath);
+                    OperationUtils.findAndClick("梦境", imagePath);
 
                     robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
                     robot.delay(100);

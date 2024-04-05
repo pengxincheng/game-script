@@ -35,7 +35,7 @@ public class Script {
                 String imagePath = OperationUtils.screenshot();
                 String words = OcrUtil.getOcrResult(imagePath);
                 //  boolean b = SelfOcrUtil.existKeyWord("是否继续抓鬼");
-               boolean b = words.contains("是否继续捉鬼");
+               boolean b = words.contains("是否继续");
                //  boolean b = true;
                 logger.info("查找结果：{}", b);
                 if (b) {
@@ -58,7 +58,7 @@ public class Script {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            TimeUnit.MINUTES.sleep(1);
+            TimeUnit.SECONDS.sleep(30);
             robot.mouseMove(random.nextInt(200), random.nextInt(500));
         }
     }

@@ -36,13 +36,13 @@ public class MiJingScript {
                 //  boolean b = true;
                 logger.info("查找结果：{}", b);
                 if (b) {
-                    OperationUtils.findAndClick("进入战斗", imagePath);
+                    OperationUtils.getWordLocationBaidu("进入战斗", imagePath);
                 }
                 FileUtil.del(imagePath);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            TimeUnit.SECONDS.sleep(30);
+            TimeUnit.SECONDS.sleep(10);
             robot.mouseMove(random.nextInt(200), random.nextInt(500));
         }
     }

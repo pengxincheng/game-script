@@ -24,21 +24,23 @@ public class App {
     public static void main(String[] args) throws Exception {
         logger.info("3秒后开始运行");
          TimeUnit.SECONDS.sleep(3);
-
-      //   Script.zhuaGui();
+         Script.zhuaGui();
        // Script.menPai();
 
       //  MiJingScript.mijing();
 
-     //   HaidiScript.haidi();
+     //  HaidiScript.haidi();
 
 
-        yitiao();
+     //     yitiao();
 
 
     }
 
 
+
+
+    
     // 三本 + 鬼
     public static void yitiao()throws Exception{
         String fubenType = "侠士副本";

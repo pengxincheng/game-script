@@ -52,7 +52,11 @@ public class OcrUtil {
         HashMap<String, String> paramMap = new HashMap<>(16);
         paramMap.put("vertexes_location", "true");
 
-        JSONObject res = client.accurateGeneral(imgPath, paramMap);
+        //高精度含位置次数多 50次/天
+        //JSONObject res = client.accurateGeneral(imgPath, paramMap);
+
+        //标准版含位置次数多 500次/天
+        JSONObject res = client.general(imgPath, paramMap);
         logger.info("res={}", res);
 
         JSONArray words_result = res.getJSONArray("words_result");
